@@ -18,7 +18,9 @@ def check_new_mail(issue_no):
     issue_array = []
     subject = []
     text = []
+    ret_data = None
     if len(data[0].split()) != 0:
+        ret_data = data[0].split()
         for emailone in data[0].split():
             issue_no = issue_no +  1 
             
@@ -54,7 +56,7 @@ def check_new_mail(issue_no):
                 "tag"  : "hec.iiitv@gmail.com"  
              }
             print(post)
-    return (issue_no, issue_array, subject, text)
+    return (issue_no, issue_array, subject, text, ret_data, mail)
 """
 count = 0
 while 1:

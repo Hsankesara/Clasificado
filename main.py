@@ -30,7 +30,7 @@ def main():
     issue_number = 0
     s = '\r\n'
     while 1:
-        issue_number, issue_array, subject, text = api.check_new_mail(issue_number)
+        issue_number, issue_array, subject, text, uid, mail = api.check_new_mail(issue_number)
         # Test get_tags
         #  subject = "regarding bus schedule"
         # text = """Sir, Our bus schedule is not according to our classes.\r\nSo many times we are facing difficulties to attend class.\r\nKindly cancel all the classes.\r\nwith regards\r\nHeet Sankesara"""
@@ -45,8 +45,10 @@ def main():
             final_tag = subject_tag + '@gmail.com'
             print final_tag
             if final_tag != 'Spam@gmail.com':
-                sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i][0], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]))
-
-
+                sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]))
+            else:
+                mail.uid('STORE', uid[i], '+FLAGS', '(\Deleted)')
+                mail.expunge()
+            
 if __name__ == '__main__':
     main()
