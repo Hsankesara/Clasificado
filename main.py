@@ -1,5 +1,6 @@
 import watson_access as watson
 import api_google as api
+import sent_mail
 import time
 
 def get_tags(subject, text, is_student):
@@ -20,7 +21,14 @@ def get_tags(subject, text, is_student):
     return (subject_tag, body_tags)
 
 def main():
+    MESS = 'diner.iiitv@gmail.com'
+    ACAD = 'academics.iiitv@gmail.com'
+    SPORTS = 'cultural.iiitv@gmail.com'
+    CULTURAL = 'cultural.iiitv@gmail.com'
+    HEC = 'hec.iiitv@gmail.com'
+    BUS = 'bus.iiitv@gmail.com'
     issue_number = 0
+    s = '\r\n'
     while 1:
         issue_number, issue_array, subject, text = api.check_new_mail(issue_number)
         # Test get_tags
@@ -32,6 +40,13 @@ def main():
             else:
                 text[i] = None
             subject_tag, body_tags = get_tags(subject[i], text[i], True)
-            print issue_number
+            # final_tag = get_final_tag(subject_tag, body_tags)
+            # edit final tag
+            final_tag = subject_tag + '@gmail.com'
+            print final_tag
+            if final_tag != 'Spam':
+                sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i][0], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]))
+
+
 if __name__ == '__main__':
     main()

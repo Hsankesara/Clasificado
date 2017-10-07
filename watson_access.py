@@ -19,11 +19,3 @@ def get_classified_tag(text, is_student):
 			# print response['output']['text'][0]
 			return response['output']['text'][0]
 	return None
-
-def main():
-	get_classified_tag("Food is not good", True)
-	get_classified_tag("done", False)
-	get_classified_tag("spam", False)
-
-if __name__ == '__main__':
-	main()
