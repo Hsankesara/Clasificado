@@ -20,18 +20,18 @@ def get_tags(subject, text, is_student):
     return (subject_tag, body_tags)
 
 def main():
-    while 1:    
-        subject, text = api.check_new_mail()
-        print subject, text
+    issue_number = 0
+    while 1:
+        issue_number, issue_array, subject, text = api.check_new_mail(issue_number)
         # Test get_tags
         #  subject = "regarding bus schedule"
         # text = """Sir, Our bus schedule is not according to our classes.\r\nSo many times we are facing difficulties to attend class.\r\nKindly cancel all the classes.\r\nwith regards\r\nHeet Sankesara"""
-        if text is not None:
-            text = text.split("\r\n")
-        else:
-            text = None
-        subject_tag, body_tags = get_tags(subject, text, True)
-        time.sleep(120)
-
+        for i in xrange(len(issue_array)):
+            if text[i] is not None:
+                text[i] = text[i].split("\r\n")
+            else:
+                text[i] = None
+            subject_tag, body_tags = get_tags(subject[i], text[i], True)
+            print issue_number
 if __name__ == '__main__':
     main()
