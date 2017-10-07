@@ -44,7 +44,7 @@ def main():
             # edit final tag
             final_tag = subject_tag + '@gmail.com'
             print final_tag
-            if final_tag != 'Spam':
+            if final_tag != 'Spam@gmail.com':
                 sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i][0], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]))
 
 
