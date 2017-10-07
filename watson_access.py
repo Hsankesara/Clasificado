@@ -8,7 +8,7 @@ def get_classified_tag(text, is_student):
 		response = tag_var.message(workspace_id = wid, message_input = {})
 		response = tag_var.message(workspace_id = wid, message_input = {'text' : text})
 		if response['output']['text'] != []:
-			print response['output']['text'][0]
+			# print response['output']['text'][0]
 			return response['output']['text'][0]
 	else :
 		tag_var = cv1(username = 'dacea7af-7f3f-4a4f-9851-187d8c4f3be7', password='QrckQsNnayWe', version = '2017-10-06')
@@ -16,8 +16,9 @@ def get_classified_tag(text, is_student):
 		response = tag_var.message(workspace_id = wid, message_input = {})
 		response = tag_var.message(workspace_id = wid, message_input = {'text' : text})
 		if response['output']['text'] != []:
-			print response['output']['text'][0]
+			# print response['output']['text'][0]
 			return response['output']['text'][0]
+	return None
 
 def main():
 	get_classified_tag("Food is not good", True)
