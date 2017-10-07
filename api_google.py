@@ -8,6 +8,7 @@ import smtplib
 
 
 def check_new_mail(issue_no):
+    subject_re = []
     mail = imaplib.IMAP4_SSL('imap.gmail.com')
     mail.login('complaints.iiitv@gmail.com', 'Pass123!@#')
     mail.list()
@@ -22,7 +23,6 @@ def check_new_mail(issue_no):
     if len(data[0].split()) != 0:
         ret_data = data[0].split()
         for emailone in data[0].split():
-            issue_no = issue_no +  1 
             
             latest_email_uid = emailone
             result, data = mail.uid('fetch', latest_email_uid, '(RFC822)')
@@ -41,22 +41,21 @@ def check_new_mail(issue_no):
              
             to = parseaddr(message.get('To'))[1]
             From = parseaddr(message.get('From'))[1]
-            subject.append(message.get('Subject'))
-            text.append(text_plain)
-            issue_array.append(issue_no)
-            date = message.get("Date")   
-            post = {                                 #dictionary
-                "to" : to, 
-                "from" : From,
-                "subject" : subject[-1],
-                "text"  : text[-1],
-                "date"  :  date,
-                "issue_no" : issue_no,
-                "status" : "incomplete",    
-                "tag"  : "hec.iiitv@gmail.com"  
-             }
-            print(post)
-    return (issue_no, issue_array, subject, text, ret_data, mail)
+            sub = message.get('Subject')
+            text_case = text_plain
+            #issue_array.append(issue_no)
+            date = message.get("Date")
+            print From
+            if From.split('@')[1] == 'iiitvadodara.ac.in' or From.split('@')[1] == 'gmail.com' :
+                if sub[0:3] == 'Re:' :
+                    subject_re.append({'issue_no':sub.split()[1][1:],'sub' : sub ,'body' : text_case })
+                else:
+                    issue_no = issue_no +  1 
+                    subject.append(sub)
+                    text.append(text_case)
+                    issue_array.append(issue_no) 
+    print 'done checking'
+    return (issue_no, issue_array, subject, text, ret_data  , mail, subject_re)
 """
 count = 0
 while 1:

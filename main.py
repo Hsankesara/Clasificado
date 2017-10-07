@@ -21,16 +21,18 @@ def get_tags(subject, text, is_student):
     return (subject_tag, body_tags)
 
 def main():
+    '''
     MESS = 'diner.iiitv@gmail.com'
     ACAD = 'academics.iiitv@gmail.com'
     SPORTS = 'cultural.iiitv@gmail.com'
     CULTURAL = 'cultural.iiitv@gmail.com'
     HEC = 'hec.iiitv@gmail.com'
     BUS = 'bus.iiitv@gmail.com'
+    '''
     issue_number = 0
     s = '\r\n'
     while 1:
-        issue_number, issue_array, subject, text, uid, mail = api.check_new_mail(issue_number)
+        issue_number, issue_array, subject, text, uid, mail, subject_re = api.check_new_mail(issue_number)
         # Test get_tags
         #  subject = "regarding bus schedule"
         # text = """Sir, Our bus schedule is not according to our classes.\r\nSo many times we are facing difficulties to attend class.\r\nKindly cancel all the classes.\r\nwith regards\r\nHeet Sankesara"""
@@ -49,6 +51,20 @@ def main():
             else:
                 mail.uid('STORE', uid[i], '+FLAGS', '(\Deleted)')
                 mail.expunge()
-            
+        for i in xrange(len(subject_re)):
+            re_text = subject_re[i]['body']
+            print re_text
+            if re_text is not None:
+                re_text = re_text.split("\r\n")
+            else:
+                re_text = None
+            print re_text
+            if re_text is not None:
+                final_tag = watson.get_classified_tag(re_text[0], False)
+                print final_tag
+                # get that mail from issue_no
+                # get from send the teacher's mail 
+                # update status
+                sent_mail.send_mail('201651018@iiitvadodara.ac.in',subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'above is an machine generated response DO NOT REPLY PLEASE')
 if __name__ == '__main__':
     main()
