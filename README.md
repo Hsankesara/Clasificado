@@ -18,3 +18,8 @@ to
 <img src="workflow.png" alt="Drawing" style="width: 200px;height: 1px;align: center;"/>
 
 >We believe that for an Institute to actually work efficiently towards students concern, it must first know what are the concerns of the students. So we did that for you, or rather everyone. The IBM Watson is trained according most of the institutes in the world. It has proved accuracy close to 100% for all the cases. Our mailing system works seamlessly to provide you a frictionless environment. 
+
+### Support: 
+
+<img src="ibm.png" alt="Drawing" style="width: 200px;height: 1px;align: left;"/>
+IBM Watson Conversations
