@@ -8,7 +8,7 @@ import os
 import sys
 
 
-def check_new_mail(issue_no):
+def check_new_mail(issue_no, posts, db):
     attach_list ={  }
     subject_re = []
     detach_dir = '.'
@@ -61,11 +61,9 @@ def check_new_mail(issue_no):
             sub = message.get('Subject')
             text_case = text_plain
             # issue_array.append(issue_no)
-            date = message.get("Date")
-
             if From.split('@')[1] == 'iiitvadodara.ac.in' or From.split('@')[1] == 'gmail.com':
                 if sub[0:3] == 'Re:':
-                    subject_re.append({'issue_no': sub.split()[1][1:], 'sub': sub, 'body': text_case})
+                    subject_re.append({'issue_no': int( sub.split()[1][1:]), 'sub': sub, 'body': text_case})
                 else:
                     print (issue_no)
                     issue_no = issue_no + 1
@@ -74,5 +72,18 @@ def check_new_mail(issue_no):
                     issue_array.append(issue_no)
                     attach_list[issue_no] = filePath
                     print(attach_list)
+                    date = message.get("Date")
+                    post = {  # dictionary
+                        "to": to,
+                        "from": From,
+                        "subject": subject[-1],
+                        "text": text[-1],
+                        "date": date,
+                        "issue_no": issue_no,
+                        "status": "incomplete",
+                        "tag": "default.iiitv@gmail.com"
+                    }
+                    posts.insert_one(post).inserted_id
+                    print post
     print "done checking"
-    return (issue_no, issue_array, subject, text, ret_data, mail, subject_re, attach_list)
+    return (issue_no, issue_array, subject,  text, ret_data, mail, subject_re, attach_list, posts, db)

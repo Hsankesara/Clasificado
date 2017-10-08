@@ -2,6 +2,9 @@ import watson_access as watson
 import api_google as api
 import sent_mail
 import time
+from pymongo import MongoClient
+import pprint
+import db_func
 
 def get_tags(subject, text, is_student):
     subject_tag = None
@@ -29,10 +32,14 @@ def main():
     HEC = 'hec.iiitv@gmail.com'
     BUS = 'bus.iiitv@gmail.com'
     '''
+    client = MongoClient()
+    db = client.test_database
+    collection = db.test_collection
+    posts = db.posts
     issue_number = 0
     s = '\r\n'
     while 1:
-        issue_number, issue_array, subject, text, uid, mail, subject_re, attach_list = api.check_new_mail(issue_number)
+        issue_number, issue_array, subject, text, uid, mail, subject_re, attach_list, posts, db = api.check_new_mail(issue_number, posts, db)
         # Test get_tags
         #  subject = "regarding bus schedule"
         # text = """Sir, Our bus schedule is not according to our classes.\r\nSo many times we are facing difficulties to attend class.\r\nKindly cancel all the classes.\r\nwith regards\r\nHeet Sankesara"""
@@ -45,7 +52,7 @@ def main():
             # final_tag = get_final_tag(subject_tag, body_tags)
             # edit final tag
             final_tag = subject_tag + '@gmail.com'
-            print(final_tag)
+            posts, db = db_func.update_tag(posts, db, issue_array[i], final_tag)
             if final_tag != 'Spam@gmail.com':
                 print attach_list           
                 sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]), attach_list[issue_array[i]])
@@ -63,9 +70,13 @@ def main():
             if re_text is not None:
                 final_tag = watson.get_classified_tag(re_text[0], False)
                 print(final_tag)
-                # get that mail from issue_no
+                print "sdfsdfsdfsdf", subject_re[i]['issue_no']
+                posts, db, stu_mail = db_func.fetch(posts, db, subject_re[i]['issue_no'])
+                print 'student mail', stu_mail
                 # get from send the teacher's mail 
-                # update status
-                sent_mail.send_mail('201651018@iiitvadodara.ac.in',subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'above is an machine generated response DO NOT REPLY PLEASE')
+                print subject_re[i]['issue_no']
+                posts, db = db_func.update_status(posts, db, subject_re[i]['issue_no'], final_tag)
+                print stu_mail[u'from']
+                sent_mail.send_mail(stu_mail[u'from'],subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'above is an machine generated response DO NOT REPLY PLEASE', None)   
 if __name__ == '__main__':
-    main()
+    main()  
