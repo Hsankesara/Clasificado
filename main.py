@@ -38,7 +38,7 @@ def main():
     collection = db.test_collection
     posts = db.posts
     issue_number = 0
-    s = '\r\n'
+    s = '\r\n'  
     while 1:
         issue_number, issue_array, subject, text, uid, mail, subject_re, attach_list, posts, db = api.check_new_mail(issue_number, posts, db)
         # Test get_tags

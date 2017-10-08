@@ -60,11 +60,11 @@ def it( posts,db, mail_dict):
         mail_dict[5]["op"]  = mail_dict[5]["op"] + 1
     
     completed, incompleted, opened = get_monthly_stats(mail_dict)
-    sent_mail.send_mail('diner.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[1]) + '\r\nTotal Completed : ' + str(completed[1]) + '\r\nTotal InCompleted' + str(incompleted[1]) ,None )
-    sent_mail.send_mail('hec.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[2]) + '\r\nTotal Completed : ' + str(completed[2]) + '\r\nTotal InCompleted' + str(incompleted[2]) ,None )
-    sent_mail.send_mail('cultural.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[3]) + '\r\nTotal Completed : ' + str(completed[3]) + '\r\nTotal InCompleted' + str(incompleted[3]) ,None )
-    sent_mail.send_mail('transport.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[4]) + '\r\nTotal Completed : ' + str(completed[4]) + '\r\nTotal InCompleted' + str(incompleted[4]) ,None )
-    sent_mail.send_mail('academics.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[5]) + '\r\nTotal Completed : ' + str(completed[5]) + '\r\nTotal InCompleted' + str(incompleted[5]) ,None )
+    sent_mail.send_mail('hec.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[1]) + '\r\nTotal Completed : ' + str(completed[1]) + '\r\nTotal InCompleted' + str(incompleted[1]) ,None )
+    sent_mail.send_mail('cultural.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[2]) + '\r\nTotal Completed : ' + str(completed[2]) + '\r\nTotal InCompleted' + str(incompleted[2]) ,None )
+    sent_mail.send_mail('transport.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[3]) + '\r\nTotal Completed : ' + str(completed[3]) + '\r\nTotal InCompleted' + str(incompleted[3]) ,None )
+    sent_mail.send_mail('academics.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[4]) + '\r\nTotal Completed : ' + str(completed[4]) + '\r\nTotal InCompleted' + str(incompleted[4]) ,None )
+    sent_mail.send_mail('diner.iiitv@gmail.com', 'Your Monthly Stats','Total Opened :' + str(opened[0]) + '\r\nTotal Completed : ' + str(completed[0]) + '\r\nTotal InCompleted' + str(incompleted[0]) ,None )
     
     print 'mails sent'
     return (posts, db)
@@ -89,5 +89,5 @@ def get_monthly_stats(mail_dict):
 
     return (completed, incompleted, opened)
 
-def clear_dict(mail_dict):   
+def     clear_dict(mail_dict):   
     mail_dict.clear()
