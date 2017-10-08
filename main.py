@@ -70,13 +70,13 @@ def main():
             if re_text is not None:
                 final_tag = watson.get_classified_tag(re_text[0], False)
                 print(final_tag)
-                print "sdfsdfsdfsdf", subject_re[i]['issue_no']
                 posts, db, stu_mail = db_func.fetch(posts, db, subject_re[i]['issue_no'])
-                print 'student mail', stu_mail
-                # get from send the teacher's mail 
-                print subject_re[i]['issue_no']
+                # get from send the teacher's mail
                 posts, db = db_func.update_status(posts, db, subject_re[i]['issue_no'], final_tag)
-                print stu_mail[u'from']
-                sent_mail.send_mail(stu_mail[u'from'],subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'above is an machine generated response DO NOT REPLY PLEASE', None)   
+                if final_tag != 'spam':
+                    sent_mail.send_mail(stu_mail[u'from'],subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'Please Fill  out this google Feedback form \r\n'+'https://docs.google.com/forms/d/e/1FAIpQLScVHY1rrdODF162mju7jzkcq-aFSvfo_-dhCJh_t9Louhk-yA/viewform?c=0&w=1 '+'\r\n\r\n  < This is a Machine Generated Response.PLEASE DO NOT REPLY >', None)   
+                else:
+                    print 'spam detected'
+                
 if __name__ == '__main__':
     main()  
