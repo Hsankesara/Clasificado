@@ -9,6 +9,7 @@ import sys
 
 
 def check_new_mail(issue_no, posts, db):
+    print 'checking started'
     attach_list ={  }
     subject_re = []
     detach_dir = '.'
@@ -28,11 +29,10 @@ def check_new_mail(issue_no, posts, db):
     if len(data[0].split()) != 0:
         ret_data = data[0].split()
         for emailone in data[0].split():
-            print "sd"
+            print 'find one'
             latest_email_uid = emailone
             result, data = mail.uid('fetch', latest_email_uid, '(RFC822)')
             raw_email = (data[0][1]).decode('utf-8')
-
             message = email.message_from_string(raw_email)
             text_plain = None
             text_html = None
@@ -65,13 +65,11 @@ def check_new_mail(issue_no, posts, db):
                 if sub[0:3] == 'Re:':
                     subject_re.append({'issue_no': int( sub.split()[1][1:]), 'sub': sub, 'body': text_case})
                 else:
-                    print (issue_no)
                     issue_no = issue_no + 1
                     subject.append(sub)
                     text.append(text_case)
                     issue_array.append(issue_no)
                     attach_list[issue_no] = filePath
-                    print(attach_list)
                     date = message.get("Date")
                     post = {  # dictionary
                         "to": to,
@@ -84,6 +82,5 @@ def check_new_mail(issue_no, posts, db):
                         "tag": "default.iiitv@gmail.com"
                     }
                     posts.insert_one(post).inserted_id
-                    print post
     print "done checking"
     return (issue_no, issue_array, subject,  text, ret_data, mail, subject_re, attach_list, posts, db)

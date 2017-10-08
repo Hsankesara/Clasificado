@@ -20,7 +20,7 @@ def get_tags(subject, text, is_student):
                     new_tag = watson.get_classified_tag(part, is_student)
                     if new_tag != 'Spam':
                         body_tags.append(new_tag)
-    print(subject_tag, body_tags)
+    print 'subject_tag = ', subject_tag,'body_tag = ', body_tags
     return (subject_tag, body_tags)
 
 def main():
@@ -54,6 +54,7 @@ def main():
             final_tag = subject_tag + '@gmail.com'
             posts, db = db_func.update_tag(posts, db, issue_array[i], final_tag)
             if final_tag != 'Spam@gmail.com':
+                print 'Attachment List'
                 print attach_list           
                 sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]), attach_list[issue_array[i]])
             else:
@@ -61,20 +62,18 @@ def main():
                 mail.expunge()
         for i in range(len(subject_re)):
             re_text = subject_re[i]['body']
-            print(re_text)
+            print 'Re-text ', re_text
             if re_text is not None:
                 re_text = re_text.split("\r\n")
             else:
                 re_text = None
-            print(re_text)
             if re_text is not None:
                 final_tag = watson.get_classified_tag(re_text[0], False)
-                print(final_tag)
                 posts, db, stu_mail = db_func.fetch(posts, db, subject_re[i]['issue_no'])
                 # get from send the teacher's mail
                 posts, db = db_func.update_status(posts, db, subject_re[i]['issue_no'], final_tag)
                 if final_tag != 'spam':
-                    sent_mail.send_mail(stu_mail[u'from'],subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'Please Fill  out this google Feedback form \r\n'+'https://docs.google.com/forms/d/e/1FAIpQLScVHY1rrdODF162mju7jzkcq-aFSvfo_-dhCJh_t9Louhk-yA/viewform?c=0&w=1 '+'\r\n\r\n  < This is a Machine Generated Response.PLEASE DO NOT REPLY >', None)   
+                    sent_mail.send_mail(stu_mail[u'from'],subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'Please Fill  out this google Feedback form \r\n'+'https://docs.google.com/forms/d/e/1FAIpQLScVHY1rrdODF162mju7jzkcq-aFSvfo_-dhCJh_t9Louhk-yA/viewform?c=0&w=1 '+'\r\n\r\n  <             This is a Machine Generated Response.PLEASE DO NOT REPLY >', None)   
                 else:
                     print 'spam detected'
                 
