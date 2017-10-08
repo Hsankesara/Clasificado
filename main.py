@@ -17,7 +17,7 @@ def get_tags(subject, text, is_student):
                     new_tag = watson.get_classified_tag(part, is_student)
                     if new_tag != 'Spam':
                         body_tags.append(new_tag)
-    print subject_tag, body_tags
+    print(subject_tag, body_tags)
     return (subject_tag, body_tags)
 
 def main():
@@ -32,11 +32,11 @@ def main():
     issue_number = 0
     s = '\r\n'
     while 1:
-        issue_number, issue_array, subject, text, uid, mail, subject_re = api.check_new_mail(issue_number)
+        issue_number, issue_array, subject, text, uid, mail, subject_re, attach_list = api.check_new_mail(issue_number)
         # Test get_tags
         #  subject = "regarding bus schedule"
         # text = """Sir, Our bus schedule is not according to our classes.\r\nSo many times we are facing difficulties to attend class.\r\nKindly cancel all the classes.\r\nwith regards\r\nHeet Sankesara"""
-        for i in xrange(len(issue_array)):
+        for i in range(len(issue_array)):
             if text[i] is not None:
                 text[i] = text[i].split("\r\n")
             else:
@@ -45,23 +45,24 @@ def main():
             # final_tag = get_final_tag(subject_tag, body_tags)
             # edit final tag
             final_tag = subject_tag + '@gmail.com'
-            print final_tag
+            print(final_tag)
             if final_tag != 'Spam@gmail.com':
-                sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]))
+                print attach_list           
+                sent_mail.send_mail(final_tag,'#' + str(issue_array[i]) +' ' + subject[i], '#'+ str(issue_array[i]) + '\r\n' + s.join(text[i]), attach_list[issue_array[i]])
             else:
                 mail.uid('STORE', uid[i], '+FLAGS', '(\Deleted)')
                 mail.expunge()
-        for i in xrange(len(subject_re)):
+        for i in range(len(subject_re)):
             re_text = subject_re[i]['body']
-            print re_text
+            print(re_text)
             if re_text is not None:
                 re_text = re_text.split("\r\n")
             else:
                 re_text = None
-            print re_text
+            print(re_text)
             if re_text is not None:
                 final_tag = watson.get_classified_tag(re_text[0], False)
-                print final_tag
+                print(final_tag)
                 # get that mail from issue_no
                 # get from send the teacher's mail 
                 # update status
