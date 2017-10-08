@@ -36,6 +36,6 @@ def send_mail(to_id, subject, body, attach_path):
     mailServer.login(from_id, from_password)
     mailServer.sendmail(from_id, to_id, msg.as_string())
     mailServer.close()
-    print "Mail sent"
+    print("Mail sent")
 
 # send_mail("201651018@iiitvadodara.ac.in", "Regarding compaints", "Serious issue in the attachment",None )

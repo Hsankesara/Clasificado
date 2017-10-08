@@ -5,6 +5,7 @@ import time
 from pymongo import MongoClient
 import pprint
 import db_func
+import datetime
 
 def get_tags(subject, text, is_student):
     subject_tag = None
@@ -76,6 +77,10 @@ def main():
                     sent_mail.send_mail(stu_mail[u'from'],subject_re[i]['sub'],s.join(re_text) + '\r\n' + 'Please Fill  out this google Feedback form \r\n'+'https://docs.google.com/forms/d/e/1FAIpQLScVHY1rrdODF162mju7jzkcq-aFSvfo_-dhCJh_t9Louhk-yA/viewform?c=0&w=1 '+'\r\n\r\n  <             This is a Machine Generated Response.PLEASE DO NOT REPLY >', None)   
                 else:
                     print 'spam detected'
+        now = datetime.datetime.now()
+        if  now.day == 1 and now.hour == 12 and now.minutes == 01:
+            mail_dict = {1:{ "comp":0 ,"op":0 },2:{ "comp":0 ,"op":0 },3:{ "comp":0 ,"op":0 },4:{ "comp":0 ,"op":0 },5:{ "comp":0 ,"op":0 }}
+            posts, db = db_func.it(posts, db, mail_dict)
                 
 if __name__ == '__main__':
     main()  
