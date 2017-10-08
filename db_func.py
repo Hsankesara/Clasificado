@@ -7,7 +7,7 @@ def update_tag(posts,db,issue_no,tag):
         'issue_no': issue_no
     }, {
         '$set': {
-            'tag':tag
+            'tag'   :tag
         }
     }, upsert=False)
     print posts.find_one({"issue_no": issue_no})[u'tag']
