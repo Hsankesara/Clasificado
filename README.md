@@ -10,8 +10,7 @@ Students in every college suffer various difficulties. They can complain to the 
 So here is the solution, Classificado, a mail classifier that uses the magic of machine learning, beautifully integrated with google mail API, to provide you a seamless service that sorts the mails according to the given complaint.
 Just email any concern or problem on a single mailing id. And let the tech do the hard work for you. We sort the mails according to a given college structure. That is we give your email to the authority that it actually concerns. Rather than just tossing it around
 This not only gets the work done quickly but also saves the authorities' time 
-We help improve the college-committees by providing them with an in-depth statistical analysis of all the complains and help them keep a neat record.
-to 
+We help improve the college-committees by providing them with an in-depth statistical analysis of all the complains and help them keep a neat record. 
 
 
 ## Here is the workflow
