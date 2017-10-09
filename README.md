@@ -23,3 +23,11 @@ to
 
 <img src="ibm.png" alt="Drawing" style="width: 200px;height: 1px;align: left;"/>
 IBM Watson Conversations
+
+### Credits:
+#### Team Los Pepes
+Heet Sankesara |
+Shivam Saboo | 
+Aman Yadav | 
+Rohan Dhoot | 
+Ajay Guru
